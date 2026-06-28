@@ -6,3 +6,5 @@ aiosqlite>=0.22
 sqlalchemy>=2.0
 markdown>=3.10
 fpdf2>=2.8
+beautifulsoup4>=4.15
+httpx>=0.28
