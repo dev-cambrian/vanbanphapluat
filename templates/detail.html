@@ -6,14 +6,14 @@
 
 {% block top_actions %}
 <a href="/xuat-pdf/{{ vb.id }}" class="btn btn-outline">
-    <i class="fa-solid fa-file-pdf"></i> Xuất PDF
+    &#128196; Xuất PDF
 </a>
 <a href="/sua/{{ vb.id }}" class="btn btn-outline">
-    <i class="fa-solid fa-pen"></i> Sửa
+    &#9998; Sửa
 </a>
 <form method="POST" action="/xoa/{{ vb.id }}" style="display:inline;" onsubmit="return confirm('Xoá văn bản này?');">
     <button type="submit" class="btn btn-danger">
-        <i class="fa-solid fa-trash"></i> Xoá
+        &#128465; Xoá
     </button>
 </form>
 {% endblock %}
@@ -25,7 +25,6 @@
     <div style="margin-bottom:24px;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
             <span class="doc-badge badge-{{ vb.loai|lower|replace(' ','') }}" style="font-size:13px;padding:4px 14px;">
-                {% if vb.loai == 'Luật' %}<i class="fa-solid fa-scale-balanced"></i>{% elif vb.loai == 'Nghị định' %}<i class="fa-solid fa-file-contract"></i>{% elif vb.loai == 'Thông tư' %}<i class="fa-solid fa-circle-info"></i>{% elif vb.loai == 'Quyết định' %}<i class="fa-solid fa-check-circle"></i>{% elif vb.loai == 'Hướng dẫn' %}<i class="fa-solid fa-compass"></i>{% elif vb.loai == 'Tiêu chuẩn' %}<i class="fa-solid fa-ruler"></i>{% endif %}
                 {{ vb.loai }}
             </span>
             {% if vb.so_hieu %}
@@ -67,7 +66,7 @@
     {% if vb.file_goc %}
     <div style="margin-bottom:20px;">
         <a href="/uploads/{{ vb.file_goc }}" class="btn btn-outline">
-            <i class="fa-solid fa-download"></i> Tải file gốc: {{ vb.file_goc.split('_',1)[1] if '_' in vb.file_goc else vb.file_goc }}
+            &#128229; Tải file gốc: {{ vb.file_goc.split('_',1)[1] if '_' in vb.file_goc else vb.file_goc }}
         </a>
     </div>
     {% endif %}
@@ -84,7 +83,7 @@
     {% if vb.noi_dung %}
     <div style="margin-top:24px;">
         <h2 style="font-size:16px;font-weight:600;margin-bottom:12px;color:var(--text-primary);">
-            <i class="fa-solid fa-file-lines"></i> Nội dung
+            &#128196; Nội dung
         </h2>
         <div class="doc-content" style="font-size:14px;line-height:1.8;color:var(--text-secondary);">
             {{ content_html|safe }}
@@ -94,7 +93,7 @@
 
     <!-- Updated -->
     <div style="margin-top:32px;padding-top:16px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted);">
-        <i class="fa-regular fa-clock"></i> Cập nhật lần cuối: {{ vb.updated_at.strftime('%H:%M %d/%m/%Y') if vb.updated_at else '' }}
+        &#128339; Cập nhật lần cuối: {{ vb.updated_at.strftime('%H:%M %d/%m/%Y') if vb.updated_at else '' }}
     </div>
 
 </div>

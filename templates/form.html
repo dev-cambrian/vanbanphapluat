@@ -7,11 +7,11 @@
 {% block top_actions %}
 {% if vb %}
 <a href="/vanban/{{ vb.id }}" class="btn btn-outline">
-    <i class="fa-solid fa-arrow-left"></i> Quay lại
+    &#8592; Quay lại
 </a>
 {% else %}
 <a href="/" class="btn btn-outline">
-    <i class="fa-solid fa-arrow-left"></i> Quay lại
+    &#8592; Quay lại
 </a>
 {% endif %}
 {% endblock %}
@@ -20,9 +20,9 @@
 <div style="max-width:800px;">
     <h1 style="font-size:22px;font-weight:700;margin-bottom:24px;">
         {% if vb %}
-        <i class="fa-solid fa-pen"></i> Sửa văn bản
+        &#9998; Sửa văn bản
         {% else %}
-        <i class="fa-solid fa-plus"></i> Thêm văn bản mới
+        &#43; Thêm văn bản mới
         {% endif %}
     </h1>
 
@@ -115,9 +115,9 @@
                 Nội dung toàn văn <span style="color:var(--text-muted);font-weight:400;">(hỗ trợ Markdown)</span>
             </label>
             <textarea name="noi_dung" rows="16" placeholder="Nhập nội dung văn bản... (có thể dùng **đậm**, *nghiêng*, - gạch đầu dòng, # tiêu đề...)"
-                      style="width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:12px;color:var(--text-primary);font-size:13px;font-family:'Courier New',monospace;outline:none;resize:vertical;line-height:1.6;">{{ vb.noi_dung if vb else '' }}</textarea>
+                      style="width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:12px;color:var(--text-primary);font-size:13px;font-family:'DejaVu Sans Mono','Courier New',monospace;outline:none;resize:vertical;line-height:1.6;">{{ vb.noi_dung if vb else '' }}</textarea>
             <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">
-                <i class="fa-solid fa-info-circle"></i> Viết bằng Markdown: tiêu đề <code>#</code>, **đậm**, *nghiêng*, `code`, - danh sách
+                &#8505; Viết bằng Markdown: tiêu đề <code>#</code>, **đậm**, *nghiêng*, `code`, - danh sách
             </div>
         </div>
 
@@ -127,7 +127,7 @@
                 File gốc (PDF/DOCX/TXT)
             </label>
             <div style="border:2px dashed var(--border);border-radius:8px;padding:20px;text-align:center;background:var(--bg-card);">
-                <i class="fa-solid fa-cloud-arrow-up" style="font-size:24px;color:var(--text-muted);display:block;margin-bottom:8px;"></i>
+                <div style="font-size:24px;color:var(--text-muted);margin-bottom:8px;">&#128228;</div>
                 <label style="cursor:pointer;color:var(--accent);font-size:13px;">
                     Chọn file
                     <input type="file" name="file" accept=".pdf,.docx,.doc,.txt,.md" style="display:none;" onchange="document.getElementById('file-name').textContent = this.files[0].name;">
@@ -141,7 +141,7 @@
         <!-- Submit -->
         <div style="display:flex;gap:10px;padding-top:8px;">
             <button type="submit" class="btn btn-primary" style="padding:10px 28px;font-size:14px;">
-                <i class="fa-solid fa-check"></i> {% if vb %}Lưu thay đổi{% else %}Thêm văn bản{% endif %}
+                &#10003; {% if vb %}Lưu thay đổi{% else %}Thêm văn bản{% endif %}
             </button>
             <a href="/" class="btn btn-outline" style="padding:10px 20px;">
                 Huỷ

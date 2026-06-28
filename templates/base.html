@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Văn bản pháp luật Xây dựng</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @font-face {
+            font-family: 'SystemUI';
+            src: local('DejaVu Sans'), local('Noto Sans'), local('Tinos'), local('sans-serif');
+        }
 
         :root {
             --bg-primary: #0b0d11;
@@ -42,26 +43,23 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'DejaVu Sans', 'Noto Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
             line-height: 1.6;
         }
 
-        /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg-primary); }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
-        /* Layout */
         .app-layout {
             display: flex;
             min-height: 100vh;
         }
 
-        /* Sidebar */
         .sidebar {
             width: 260px;
             background: var(--bg-secondary);
@@ -91,7 +89,8 @@
             gap: 10px;
         }
 
-        .sidebar-header h1 i {
+        .sidebar-header .icon-gavel {
+            display: inline-block;
             font-size: 20px;
         }
 
@@ -141,10 +140,11 @@
             background: var(--accent-glow);
         }
 
-        .sidebar-nav a i {
-            width: 16px;
+        .sidebar-nav .nav-icon {
+            width: 20px;
             text-align: center;
             font-size: 14px;
+            flex-shrink: 0;
         }
 
         .sidebar-stats {
@@ -168,14 +168,12 @@
             color: var(--text-primary);
         }
 
-        /* Main content */
         .main-content {
             flex: 1;
             margin-left: 260px;
             padding: 0;
         }
 
-        /* Top bar */
         .topbar {
             padding: 16px 32px;
             background: var(--bg-secondary);
@@ -202,12 +200,10 @@
             gap: 8px;
         }
 
-        /* Content area */
         .content-area {
             padding: 24px 32px 60px;
         }
 
-        /* Search */
         .search-section {
             margin-bottom: 24px;
         }
@@ -228,7 +224,7 @@
             box-shadow: 0 0 0 3px var(--accent-glow);
         }
 
-        .search-box i {
+        .search-box .search-icon {
             color: var(--text-muted);
             font-size: 16px;
         }
@@ -248,7 +244,6 @@
             color: var(--text-muted);
         }
 
-        /* Filter bar */
         .filter-bar {
             display: flex;
             gap: 10px;
@@ -303,7 +298,6 @@
             color: var(--text-primary);
         }
 
-        /* Cards grid */
         .card-grid {
             display: flex;
             flex-direction: column;
@@ -374,10 +368,6 @@
             gap: 4px;
         }
 
-        .doc-meta i {
-            font-size: 11px;
-        }
-
         .doc-summary {
             font-size: 13px;
             color: var(--text-secondary);
@@ -390,7 +380,6 @@
             overflow: hidden;
         }
 
-        /* Pagination */
         .pagination {
             display: flex;
             justify-content: center;
@@ -428,7 +417,6 @@
             pointer-events: none;
         }
 
-        /* Buttons */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -474,13 +462,12 @@
             border-color: var(--red);
         }
 
-        /* Empty state */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
         }
 
-        .empty-state i {
+        .empty-state .empty-icon {
             font-size: 48px;
             color: var(--text-muted);
             margin-bottom: 16px;
@@ -497,7 +484,154 @@
             color: var(--text-muted);
         }
 
-        /* Responsive */
+        /* Detail page */
+        .detail-header {
+            margin-bottom: 24px;
+        }
+
+        .detail-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        .detail-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding: 16px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .detail-meta .meta-item {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .detail-meta .meta-item b {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .detail-body {
+            padding: 24px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            line-height: 1.8;
+        }
+
+        .detail-body h1, .detail-body h2, .detail-body h3 {
+            color: var(--accent);
+            margin: 20px 0 10px;
+        }
+
+        .detail-body h1 { font-size: 20px; }
+        .detail-body h2 { font-size: 17px; }
+        .detail-body h3 { font-size: 15px; }
+
+        .detail-body p {
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+
+        .detail-body strong {
+            color: var(--text-primary);
+        }
+
+        .detail-body ul, .detail-body ol {
+            margin: 8px 0 8px 20px;
+            color: var(--text-secondary);
+        }
+
+        .detail-body li {
+            margin-bottom: 4px;
+        }
+
+        .detail-body code {
+            background: var(--bg-hover);
+            padding: 1px 5px;
+            border-radius: 3px;
+            font-size: 13px;
+        }
+
+        /* Form page */
+        .form-container {
+            max-width: 800px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .form-group .form-input,
+        .form-group .form-textarea,
+        .form-group .form-select {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            padding: 10px 14px;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group .form-input:focus,
+        .form-group .form-textarea:focus,
+        .form-group .form-select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .form-group .form-textarea {
+            min-height: 300px;
+            resize: vertical;
+            font-family: 'DejaVu Sans Mono', 'Noto Sans Mono', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .form-group .form-input[type="file"] {
+            padding: 8px;
+        }
+
+        .form-group .form-hint {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 100%;
@@ -519,6 +653,19 @@
                 flex-direction: column;
                 align-items: stretch;
             }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+
+        /* Action buttons row */
+        .action-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
         }
     </style>
 </head>
@@ -528,7 +675,7 @@
         <aside class="sidebar">
             <div class="sidebar-header">
                 <h1>
-                    <i class="fa-solid fa-gavel"></i>
+                    <span class="icon-gavel">&#9878;</span>
                     Xây dựng
                 </h1>
                 <div class="sub">Văn bản pháp luật</div>
@@ -536,17 +683,17 @@
             <nav class="sidebar-nav">
                 <div class="section-title">Danh mục</div>
                 <a href="/" class="active">
-                    <i class="fa-solid fa-house"></i> Tất cả văn bản
+                    <span class="nav-icon">&#127968;</span> Tất cả văn bản
                 </a>
                 {% for l in loai_list %}
                 <a href="/?loai={{ l|urlencode }}" class="{% if loai_filter == l %}active{% endif %}">
-                    <i class="fa-solid fa-file-lines"></i> {{ l }}
+                    <span class="nav-icon">&#128196;</span> {{ l }}
                 </a>
                 {% endfor %}
                 <div style="margin-top:16px;">
                     <div class="section-title">Quản lý</div>
                     <a href="/them">
-                        <i class="fa-solid fa-plus"></i> Thêm văn bản
+                        <span class="nav-icon">&#43;</span> Thêm văn bản
                     </a>
                 </div>
             </nav>
@@ -562,13 +709,13 @@
         <main class="main-content">
             <div class="topbar">
                 <div class="breadcrumb">
-                    <i class="fa-solid fa-file-lines"></i>
+                    <span style="margin-right:6px;">&#128196;</span>
                     {% block breadcrumb %}Trang chủ{% endblock %}
                 </div>
                 <div class="topbar-actions">
                     {% block top_actions %}
                     <a href="/them" class="btn btn-primary">
-                        <i class="fa-solid fa-plus"></i> Thêm văn bản
+                        &#43; Thêm văn bản
                     </a>
                     {% endblock %}
                 </div>
