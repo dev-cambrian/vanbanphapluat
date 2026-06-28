@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block breadcrumb %}
+<a href="/" style="color:var(--text-muted);text-decoration:none;">Văn bản</a> / <span>{% if vb %}Sửa{% else %}Thêm mới{% endif %}</span>
+{% endblock %}
+
+{% block top_actions %}
+{% if vb %}
+<a href="/vanban/{{ vb.id }}" class="btn btn-outline">
+    <i class="fa-solid fa-arrow-left"></i> Quay lại
+</a>
+{% else %}
+<a href="/" class="btn btn-outline">
+    <i class="fa-solid fa-arrow-left"></i> Quay lại
+</a>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div style="max-width:800px;">
+    <h1 style="font-size:22px;font-weight:700;margin-bottom:24px;">
+        {% if vb %}
+        <i class="fa-solid fa-pen"></i> Sửa văn bản
+        {% else %}
+        <i class="fa-solid fa-plus"></i> Thêm văn bản mới
+        {% endif %}
+    </h1>
+
+    <form method="POST" action="{% if vb %}/sua/{{ vb.id }}{% else %}/them{% endif %}" enctype="multipart/form-data" style="display:flex;flex-direction:column;gap:20px;">
+
+        <!-- Loại + Số hiệu -->
+        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:180px;">
+                <label style="display:block;font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:6px;">
+                    Loại văn bản <span style="color:var(--red);">*</span>
+                </label>
+                <select name="loai" required class="filter-select" style="width:100%;padding:10px 12px;">
+                    {% for l in loai_list %}
+                    <option value="{{ l }}" {% if vb and vb.loai == l %}selected{% endif %}>{{ l }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div style="flex:2;min-width:200px;">
+                <label style="display:block;font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:6px;">
+                    Số hiệu văn bản
+                </label>
+                <input type="text" name="so_hieu" value="{{ vb.so_hieu if vb else '' }}" placeholder="VD: 123/2024/NĐ-CP"
+                       style="width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text-primary);font-size:14px;font-family:inherit;outline:none;">
+            </div>
+        </div>
+
+        <!-- Tiêu đề -->
+        <div>
+            <label style="display:block;font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:6px;">
+                Tiêu đề văn bản <span style="color:var(--red);">*</span>
+            </label>
+            <input type="text" name="tieu_de" value="{{ vb.tieu_de if vb else '' }}" required
+                   placeholder="Nhập tiêu đề đầy đủ của văn bản..."
+                   style="width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text-primary);font-size:14px;font-family:inherit;outline:none;"
+                   {% if not vb %}autofocus{% endif %}>
+        </div>
+
+        <!-- Năm + Cơ quan -->
+        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:140px;">
+                <label style="display:block;font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:6px;">
+                    Năm ban hành
+                </label>
+                <input type="number" name="nam" value="{{ vb.nam if vb else now().year }}" min="1900" max="2099"
+                       style="width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text-primary);font-size:14px;font-family:inherit;outline:none;">
+            </div>
+            <div style="flex:2;min-width:200px;">
+                <label style="display:block;font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:6px;">
+                    Cơ quan ban hành
+                </label>
+                <select name="co_quan" class="filter-select" style="width:100%;padding:10px 12px;">
+                    <option value="">-- Chọn --</option>
+                    {% for cq in co_quan_list %}
+                    <option value="{{ cq }}" {% if vb and vb.co_quan == cq %}selected{% endif %}>{{ cq }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <!-- Ngày tháng -->
+        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:140px;">
+                <label style="display:block;font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:6px;">
+                    Ngày ban hành
+                </label>
+                <input type="date" name="ngay_ban_hanh" value="{{ vb.ngay_ban_hanh if vb else '' }}"
+                       style="width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text-primary);font-size:14px;font-family:inherit;outline:none;">
+            </div>
+            <div style="flex:1;min-width:140px;">
+                <label style="display:block;font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:6px;">
+                    Ngày hiệu lực
+                </label>
+                <input type="date" name="ngay_hieu_luc" value="{{ vb.ngay_hieu_luc if vb else '' }}"
+                       style="width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text-primary);font-size:14px;font-family:inherit;outline:none;">
+            </div>
+        </div>
+
+        <!-- Trích dẫn -->
+        <div>
+            <label style="display:block;font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:6px;">
+                Trích dẫn / Tóm tắt
+            </label>
+            <textarea name="trich_dan" rows="3" placeholder="Tóm tắt ngắn nội dung văn bản..."
+                      style="width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text-primary);font-size:14px;font-family:inherit;outline:none;resize:vertical;">{{ vb.trich_dan if vb else '' }}</textarea>
+        </div>
+
+        <!-- Nội dung -->
+        <div>
+            <label style="display:block;font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:6px;">
+                Nội dung toàn văn <span style="color:var(--text-muted);font-weight:400;">(hỗ trợ Markdown)</span>
+            </label>
+            <textarea name="noi_dung" rows="16" placeholder="Nhập nội dung văn bản... (có thể dùng **đậm**, *nghiêng*, - gạch đầu dòng, # tiêu đề...)"
+                      style="width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:12px;color:var(--text-primary);font-size:13px;font-family:'Courier New',monospace;outline:none;resize:vertical;line-height:1.6;">{{ vb.noi_dung if vb else '' }}</textarea>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">
+                <i class="fa-solid fa-info-circle"></i> Viết bằng Markdown: tiêu đề <code>#</code>, **đậm**, *nghiêng*, `code`, - danh sách
+            </div>
+        </div>
+
+        <!-- File upload -->
+        <div>
+            <label style="display:block;font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:6px;">
+                File gốc (PDF/DOCX/TXT)
+            </label>
+            <div style="border:2px dashed var(--border);border-radius:8px;padding:20px;text-align:center;background:var(--bg-card);">
+                <i class="fa-solid fa-cloud-arrow-up" style="font-size:24px;color:var(--text-muted);display:block;margin-bottom:8px;"></i>
+                <label style="cursor:pointer;color:var(--accent);font-size:13px;">
+                    Chọn file
+                    <input type="file" name="file" accept=".pdf,.docx,.doc,.txt,.md" style="display:none;" onchange="document.getElementById('file-name').textContent = this.files[0].name;">
+                </label>
+                <span id="file-name" style="display:block;font-size:12px;color:var(--text-muted);margin-top:4px;">
+                    {% if vb and vb.file_goc %}File hiện tại: {{ vb.file_goc.split('_',1)[1] if '_' in vb.file_goc else vb.file_goc }}{% else %}Chưa chọn file{% endif %}
+                </span>
+            </div>
+        </div>
+
+        <!-- Submit -->
+        <div style="display:flex;gap:10px;padding-top:8px;">
+            <button type="submit" class="btn btn-primary" style="padding:10px 28px;font-size:14px;">
+                <i class="fa-solid fa-check"></i> {% if vb %}Lưu thay đổi{% else %}Thêm văn bản{% endif %}
+            </button>
+            <a href="/" class="btn btn-outline" style="padding:10px 20px;">
+                Huỷ
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

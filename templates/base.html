@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Văn bản pháp luật Xây dựng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-primary: #0b0d11;
+            --bg-secondary: #111319;
+            --bg-card: #181b23;
+            --bg-hover: #1e2130;
+            --border: #232738;
+            --text-primary: #e8eaed;
+            --text-secondary: #989bab;
+            --text-muted: #5f6378;
+            --accent: #a58aff;
+            --accent-hover: #b9a1ff;
+            --accent-glow: rgba(165, 138, 255, 0.15);
+            --green: #4ade80;
+            --green-bg: rgba(74, 222, 128, 0.1);
+            --blue: #60a5fa;
+            --blue-bg: rgba(96, 165, 250, 0.1);
+            --orange: #fb923c;
+            --orange-bg: rgba(251, 146, 60, 0.1);
+            --pink: #f472b6;
+            --pink-bg: rgba(244, 114, 182, 0.1);
+            --red: #f87171;
+            --red-bg: rgba(248, 113, 113, 0.1);
+            --teal: #2dd4bf;
+            --teal-bg: rgba(45, 212, 191, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        /* Layout */
+        .app-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            z-index: 50;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 24px 20px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-header h1 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-header h1 i {
+            font-size: 20px;
+        }
+
+        .sidebar-header .sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-nav {
+            padding: 12px 0;
+            flex: 1;
+        }
+
+        .sidebar-nav .section-title {
+            padding: 8px 20px 4px;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.15s;
+            border-left: 2px solid transparent;
+        }
+
+        .sidebar-nav a:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .sidebar-nav a.active {
+            color: var(--accent);
+            border-left-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .sidebar-nav a i {
+            width: 16px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .sidebar-stats {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .sidebar-stats .stat-tag {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: var(--bg-hover);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .sidebar-stats .stat-tag b {
+            color: var(--text-primary);
+        }
+
+        /* Main content */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 0;
+        }
+
+        /* Top bar */
+        .topbar {
+            padding: 16px 32px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 40;
+        }
+
+        .topbar .breadcrumb {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .topbar .breadcrumb span {
+            color: var(--text-primary);
+        }
+
+        .topbar-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Content area */
+        .content-area {
+            padding: 24px 32px 60px;
+        }
+
+        /* Search */
+        .search-section {
+            margin-bottom: 24px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 4px 16px;
+            transition: border-color 0.2s;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .search-box i {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        .search-box input {
+            flex: 1;
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            font-size: 14px;
+            padding: 12px 0;
+            font-family: inherit;
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Filter bar */
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+            align-items: center;
+        }
+
+        .filter-bar label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-select {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            padding: 6px 10px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            cursor: pointer;
+            min-width: 110px;
+        }
+
+        .filter-select:focus {
+            border-color: var(--accent);
+        }
+
+        .btn-icon {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.15s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: inherit;
+        }
+
+        .btn-icon:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        /* Cards grid */
+        .card-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .doc-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 20px;
+            transition: all 0.15s;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .doc-card:hover {
+            border-color: var(--accent);
+            background: var(--bg-hover);
+            transform: translateX(2px);
+        }
+
+        .doc-card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 6px;
+        }
+
+        .doc-badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 5px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .badge-luat { background: var(--blue-bg); color: var(--blue); }
+        .badge-nghidinh { background: var(--orange-bg); color: var(--orange); }
+        .badge-thongtu { background: var(--teal-bg); color: var(--teal); }
+        .badge-quyetdinh { background: var(--pink-bg); color: var(--pink); }
+        .badge-huongdan { background: var(--green-bg); color: var(--green); }
+        .badge-tieuchuan { background: var(--red-bg); color: var(--red); }
+
+        .doc-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .doc-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-left: 0;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .doc-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .doc-meta i {
+            font-size: 11px;
+        }
+
+        .doc-summary {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            margin-left: 0;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .pagination a, .pagination span {
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            transition: all 0.15s;
+        }
+
+        .pagination a:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .pagination .current {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .pagination .disabled {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.15s;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .btn-danger {
+            background: var(--red-bg);
+            color: var(--red);
+            border: 1px solid transparent;
+        }
+
+        .btn-danger:hover {
+            border-color: var(--red);
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .content-area {
+                padding: 16px;
+            }
+            .topbar {
+                padding: 12px 16px;
+            }
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>
+                    <i class="fa-solid fa-gavel"></i>
+                    Xây dựng
+                </h1>
+                <div class="sub">Văn bản pháp luật</div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="section-title">Danh mục</div>
+                <a href="/" class="active">
+                    <i class="fa-solid fa-house"></i> Tất cả văn bản
+                </a>
+                {% for l in loai_list %}
+                <a href="/?loai={{ l|urlencode }}" class="{% if loai_filter == l %}active{% endif %}">
+                    <i class="fa-solid fa-file-lines"></i> {{ l }}
+                </a>
+                {% endfor %}
+                <div style="margin-top:16px;">
+                    <div class="section-title">Quản lý</div>
+                    <a href="/them">
+                        <i class="fa-solid fa-plus"></i> Thêm văn bản
+                    </a>
+                </div>
+            </nav>
+            <div class="sidebar-stats">
+                {% for l, c in stats.items() %}
+                <span class="stat-tag">{{ l }} <b>{{ c }}</b></span>
+                {% endfor %}
+                <span class="stat-tag">Tổng <b>{{ total }}</b></span>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="main-content">
+            <div class="topbar">
+                <div class="breadcrumb">
+                    <i class="fa-solid fa-file-lines"></i>
+                    {% block breadcrumb %}Trang chủ{% endblock %}
+                </div>
+                <div class="topbar-actions">
+                    {% block top_actions %}
+                    <a href="/them" class="btn btn-primary">
+                        <i class="fa-solid fa-plus"></i> Thêm văn bản
+                    </a>
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="content-area">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+</body>
+</html>
