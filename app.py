@@ -130,8 +130,20 @@ def extract_text_from_file(filepath: str) -> str:
         elif ext == ".md":
             with open(filepath, "r", encoding="utf-8") as f:
                 return f.read()
-        elif ext in (".pdf", ".docx"):
-            # Trả về thông báo, user sẽ xem file gốc
+        elif ext in (".pdf",):
+            try:
+                import subprocess
+                result = subprocess.run(
+                    ["pdftotext", filepath, "-"],
+                    capture_output=True, text=True, timeout=30
+                )
+                text = result.stdout.strip()
+                if text:
+                    return text
+                return f"*[Không thể trích xuất nội dung từ {Path(filepath).name}]*"
+            except Exception:
+                return f"*[Lỗi đọc file PDF: {Path(filepath).name}]*"
+        elif ext == ".docx":
             return f"*[Nội dung trong file: {Path(filepath).name} — hãy tải file gốc để xem]*"
         else:
             return ""
