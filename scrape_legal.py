@@ -52,19 +52,19 @@ LOAI_MAP = {
 
 CO_QUAN_MAP = {
     "Chính phủ": "Chính phủ",
-    "Thủ tướng": "Thủ tướng Chính phủ",
-    "BXD": "Bộ Xây dựng",
-    "Bộ Xây dựng": "Bộ Xây dựng",
-    "BTC": "Bộ Tài chính",
-    "BCT": "Bộ Công Thương",
-    "BKHCN": "Bộ Khoa học và Công nghệ",
-    "BGDDT": "Bộ Giáo dục và Đào tạo",
-    "BTTTT": "Bộ Thông tin và Truyền thông",
-    "BNN": "Bộ Nông nghiệp và Phát triển nông thôn",
-    "BQP": "Bộ Quốc phòng",
-    "BCA": "Bộ Công an",
-    "BNV": "Bộ Nội vụ",
-    "BTP": "Bộ Tư pháp",
+    "Thủ tướng": "Chính phủ",
+    "BXD": "Bộ",
+    "Bộ Xây dựng": "Bộ",
+    "BTC": "Bộ",
+    "BCT": "Bộ",
+    "BKHCN": "Bộ",
+    "BGDDT": "Bộ",
+    "BTTTT": "Bộ",
+    "BNN": "Bộ",
+    "BQP": "Bộ",
+    "BCA": "Bộ",
+    "BNV": "Bộ",
+    "BTP": "Bộ",
 }
 
 # ─── Database ──────────────────────────────────────────────
@@ -190,23 +190,23 @@ def extract_co_quan(so_hieu: str, title: str, description: str) -> str:
     if "ND-CP" in sogoc:
         return "Chính phủ"
     if "QD-TTg" in sogoc or "QD-TTG" in sogoc or "CT-TTg" in sogoc:
-        return "Thủ tướng Chính phủ"
+        return "Chính phủ"
     if "TT-BXD" in sogoc or "VBHN-BXD" in sogoc:
-        return "Bộ Xây dựng"
+        return "Bộ"
     if "TT-BKHCN" in sogoc:
-        return "Bộ Khoa học và Công nghệ"
+        return "Bộ"
     if "TT-BCT" in sogoc:
-        return "Bộ Công Thương"
+        return "Bộ"
     if "TT-BGDDT" in sogoc or "TT-BGDĐT" in sogoc:
-        return "Bộ Giáo dục và Đào tạo"
+        return "Bộ"
     if "TT-BNN" in sogoc:
-        return "Bộ Nông nghiệp và Phát triển nông thôn"
+        return "Bộ"
     if "TT-NHNN" in sogoc:
-        return "Ngân hàng Nhà nước"
+        return "Cơ quan khác"
     if "TT-BTTTT" in sogoc:
-        return "Bộ Thông tin và Truyền thông"
+        return "Bộ"
     if "TT-BTC" in sogoc:
-        return "Bộ Tài chính"
+        return "Bộ"
     if "NQ-CP" in sogoc:
         return "Chính phủ"
 
@@ -216,7 +216,7 @@ def extract_co_quan(so_hieu: str, title: str, description: str) -> str:
         if key.lower() in title_lower:
             return val
 
-    return "Chính phủ"
+    return "Cơ quan khác"
 
 
 def extract_full_title(client: httpx.Client, url: str) -> str:
