@@ -667,6 +667,53 @@
             padding-top: 16px;
             border-top: 1px solid var(--border);
         }
+
+        /* ===== BACKGROUND ICON (Hermes style) ===== */
+        .main-content {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bg-emblem {
+            position: absolute;
+            top: 50%;
+            right: -5%;
+            transform: translateY(-55%);
+            width: min(70vw, 800px);
+            height: auto;
+            pointer-events: none;
+            z-index: 0;
+            mix-blend-mode: soft-light;
+            opacity: 0.12;
+            color: var(--accent);
+            user-select: none;
+        }
+
+        .bg-emblem svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Nền gradient vignette nhẹ */
+        .main-content::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 70% 30%, rgba(165, 138, 255, 0.04), transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .content-area {
+            position: relative;
+            z-index: 1;
+        }
+
+        .topbar {
+            position: relative;
+            z-index: 1;
+        }
     </style>
 </head>
 <body>
@@ -707,6 +754,59 @@
 
         <!-- Main -->
         <main class="main-content">
+            <div class="bg-emblem" aria-hidden="true">
+                <svg viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Arc decoration (Hermes style) -->
+                    <path d="M200 600 Q400 200 600 600" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.3"/>
+                    <path d="M150 650 Q400 150 650 650" stroke="currentColor" stroke-width="1" fill="none" opacity="0.2"/>
+                    <!-- Balance scale: beam -->
+                    <path d="M270 340 L530 340" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    <!-- Balance scale: center post -->
+                    <path d="M400 340 L400 290" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    <!-- Balance scale: base -->
+                    <path d="M370 290 L430 290" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M390 290 Q400 275 410 290" stroke="currentColor" stroke-width="2" fill="none"/>
+                    <!-- Scale left pan -->
+                    <path d="M275 345 L235 410 Q220 430 235 440 L295 440 Q310 430 295 410 L275 345" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <path d="M300 345 L340 410 Q355 430 340 440 L280 440 Q265 430 280 410 L300 345" fill="currentColor" opacity="0.08"/>
+                    <!-- Scale right pan -->
+                    <path d="M525 345 L565 410 Q580 430 565 440 L505 440 Q490 430 505 410 L525 345" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <path d="M500 345 L460 410 Q445 430 460 440 L520 440 Q535 430 520 410 L500 345" fill="currentColor" opacity="0.08"/>
+                    <!-- Scale chains left -->
+                    <path d="M265 345 L245 400" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+                    <path d="M285 345 L295 400" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+                    <!-- Scale chains right -->
+                    <path d="M535 345 L555 400" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+                    <path d="M515 345 L505 400" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+                    <!-- Buildings / construction -->
+                    <path d="M140 500 L140 580 L140 660 L190 660 L190 540 L190 500 Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <path d="M190 520 L190 540 L230 540 L230 500 L230 660 L190 660" stroke="currentColor" stroke-width="1" fill="currentColor" opacity="0.05"/>
+                    <path d="M230 500 L230 660 L300 660 L300 440 L230 440 L230 500 Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <path d="M300 440 L300 660 L370 660 L370 300 L300 300 L300 440 Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <path d="M370 300 L370 660 L430 660 L430 360 L370 360" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <path d="M430 360 L430 660 L510 660 L510 200 L430 200 L430 360 Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <path d="M510 200 L510 660 L560 660 L560 480 L510 480" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <!-- Windows on buildings -->
+                    <line x1="260" y1="470" x2="260" y2="490" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                    <line x1="280" y1="470" x2="280" y2="490" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                    <line x1="330" y1="340" x2="330" y2="360" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                    <line x1="350" y1="340" x2="350" y2="360" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                    <line x1="330" y1="380" x2="330" y2="400" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                    <line x1="350" y1="380" x2="350" y2="400" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                    <line x1="460" y1="260" x2="460" y2="280" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                    <line x1="490" y1="260" x2="490" y2="280" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                    <line x1="460" y1="300" x2="460" y2="320" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                    <line x1="490" y1="300" x2="490" y2="320" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                    <line x1="460" y1="340" x2="460" y2="360" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                    <line x1="490" y1="340" x2="490" y2="360" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+                    <!-- Sparkle dots -->
+                    <circle cx="400" cy="180" r="3" fill="currentColor" opacity="0.4"/>
+                    <circle cx="580" cy="300" r="2" fill="currentColor" opacity="0.3"/>
+                    <circle cx="220" cy="280" r="2" fill="currentColor" opacity="0.3"/>
+                    <circle cx="440" cy="150" r="1.5" fill="currentColor" opacity="0.25"/>
+                    <circle cx="320" cy="220" r="1.5" fill="currentColor" opacity="0.2"/>
+                </svg>
+            </div>
             <div class="topbar">
                 <div class="breadcrumb">
                     <span style="margin-right:6px;">&#128196;</span>
