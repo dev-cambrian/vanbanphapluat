@@ -1,19 +1,107 @@
 {% extends "base.html" %}
 
 {% block breadcrumb %}
-Văn bản pháp luật
-{% if loai_filter %} / <span>{{ loai_filter }}</span>{% endif %}
-{% if search %} / Tìm: "{{ search }}"{% endif %}
+Trang chủ
 {% endblock %}
 
 {% block content %}
 
-<!-- Search -->
+<!-- ===== HERO / THỐNG KÊ ===== -->
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">
+            <span class="hero-icon">&#9878;</span>
+            Kho văn bản pháp luật <span class="hero-highlight">Xây dựng</span>
+        </h1>
+        <p class="hero-subtitle">Tra cứu văn bản quy phạm pháp luật ngành Xây dựng — Luật, Nghị định, Thông tư, Quyết định, Hướng dẫn, Tiêu chuẩn</p>
+    </div>
+    <div class="hero-stats-row">
+        <div class="hero-stat-card hero-stat-total">
+            <div class="hero-stat-number">{{ total }}</div>
+            <div class="hero-stat-label">Tổng văn bản</div>
+        </div>
+        {% for l, c in stats.items() %}
+        <a href="/?loai={{ l }}" class="hero-stat-card hero-stat-link">
+            <div class="hero-stat-number">{{ c }}</div>
+            <div class="hero-stat-label">{{ l }}</div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- ===== MỚI CẬP NHẬT ===== -->
+{% if recent_items %}
+<div class="section-header">
+    <h2 class="section-title">
+        <span style="margin-right:8px;">&#128640;</span> Văn bản mới nhất
+    </h2>
+    <span class="section-meta">Cập nhật gần đây</span>
+</div>
+<div class="recent-grid">
+    {% for doc in recent_items %}
+    <a href="/vanban/{{ doc.id }}" class="recent-card">
+        <div class="recent-card-top">
+            <span class="doc-badge badge-{{ doc.loai|lower|replace(' ','') }}">
+                {{ doc.loai }}
+            </span>
+            {% if doc.so_hieu %}
+            <span class="recent-sohieu">{{ doc.so_hieu }}</span>
+            {% endif %}
+        </div>
+        <div class="recent-card-title">{{ doc.tieu_de }}</div>
+        <div class="recent-card-meta">
+            {% if doc.co_quan %}<span>&#127970; {{ doc.co_quan }}</span>{% endif %}
+            {% if doc.nam %}<span>&#128197; {{ doc.nam }}</span>{% endif %}
+            <span>&#128339; {{ doc.updated_at.strftime('%d/%m/%Y') if doc.updated_at else '' }}</span>
+        </div>
+        {% if doc.trich_dan %}
+        <div class="recent-card-summary">{{ doc.trich_dan[:120] }}{% if doc.trich_dan|length > 120 %}...{% endif %}</div>
+        {% endif %}
+    </a>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- ===== DANH MỤC NHANH ===== -->
+<div class="section-header" style="margin-top:32px;">
+    <h2 class="section-title">
+        <span style="margin-right:8px;">&#128218;</span> Danh mục văn bản
+    </h2>
+</div>
+<div class="category-grid">
+    {% for l in loai_list %}
+    {% set count = stats.get(l, 0) %}
+    <a href="/?loai={{ l }}" class="category-card {% if count == 0 %}category-empty{% endif %}">
+        <div class="category-icon">
+            {% if l == "Luật" %}&#9878;
+            {% elif l == "Nghị định" %}&#128220;
+            {% elif l == "Thông tư" %}&#128214;
+            {% elif l == "Quyết định" %}&#10004;
+            {% elif l == "Hướng dẫn" %}&#128161;
+            {% elif l == "Tiêu chuẩn" %}&#128200;
+            {% else %}&#128196;
+            {% endif %}
+        </div>
+        <div class="category-info">
+            <div class="category-name">{{ l }}</div>
+            <div class="category-count">{{ count }} văn bản</div>
+        </div>
+        <div class="category-arrow">&#10132;</div>
+    </a>
+    {% endfor %}
+</div>
+
+<!-- ===== TÌM KIẾM NÂNG CAO ===== -->
+<div class="section-header" style="margin-top:32px;">
+    <h2 class="section-title">
+        <span style="margin-right:8px;">&#128269;</span> Tra cứu văn bản
+    </h2>
+</div>
 <div class="search-section">
     <form method="GET" action="/">
         <div class="search-box">
             <span class="search-icon">&#128269;</span>
-            <input type="text" name="search" placeholder="Tìm kiếm văn bản..." value="{{ search }}" autocomplete="off">
+            <input type="text" name="search" placeholder="Tìm theo tiêu đề, số hiệu, nội dung, cơ quan..." value="{{ search }}" autocomplete="off">
             <button type="submit" class="btn btn-primary" style="padding:6px 14px;">
                 &#10132;
             </button>
@@ -58,7 +146,7 @@ Văn bản pháp luật
     </form>
 </div>
 
-<!-- Danh sách -->
+<!-- ===== DANH SÁCH ===== -->
 {% if items %}
 <div class="card-grid">
     {% for doc in items %}
@@ -73,9 +161,9 @@ Văn bản pháp luật
         </div>
         <div class="doc-meta">
             {% if doc.nam %}<span>&#128197; {{ doc.nam }}</span>{% endif %}
-            {% if doc.co_quan %}<span>&127970; {{ doc.co_quan }}</span>{% endif %}
-            {% if doc.ngay_ban_hanh %}<span>&128467; {{ doc.ngay_ban_hanh }}</span>{% endif %}
-            <span>&128339; {{ doc.updated_at.strftime('%d/%m/%Y') if doc.updated_at else '' }}</span>
+            {% if doc.co_quan %}<span>&#127970; {{ doc.co_quan }}</span>{% endif %}
+            {% if doc.ngay_ban_hanh %}<span>&#128467; {{ doc.ngay_ban_hanh }}</span>{% endif %}
+            <span>&#128339; {{ doc.updated_at.strftime('%d/%m/%Y') if doc.updated_at else '' }}</span>
         </div>
         {% if doc.trich_dan %}
         <div class="doc-summary">{{ doc.trich_dan }}</div>

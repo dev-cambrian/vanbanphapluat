@@ -251,6 +251,9 @@ async def trang_chu(
 
     total_pages = max(1, (total + per_page - 1) // per_page)
 
+    # Dữ liệu cho dashboard (không bị filter)
+    recent_items = db.query(VanBan).order_by(VanBan.updated_at.desc()).limit(5).all()
+
     return templates.TemplateResponse(request, "index.html", {
         "items": items,
         "search": search,
@@ -260,6 +263,7 @@ async def trang_chu(
         "page": page,
         "total_pages": total_pages,
         "filtered_total": total,
+        "recent_items": recent_items,
     })
 
 
