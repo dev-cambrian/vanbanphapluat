@@ -56,122 +56,96 @@
         ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
         .app-layout {
-            display: flex;
             min-height: 100vh;
-        }
-
-        .sidebar {
-            width: 260px;
-            background: var(--bg-secondary);
-            border-right: 1px solid var(--border);
-            padding: 0;
             display: flex;
             flex-direction: column;
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            z-index: 50;
-            overflow-y: auto;
         }
 
-        .sidebar-header {
-            padding: 24px 20px 16px;
+        /* ===== TOP NAV (thay cho sidebar) ===== */
+        .top-nav {
+            background: var(--bg-secondary);
             border-bottom: 1px solid var(--border);
-        }
-
-        .sidebar-header h1 {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--accent);
+            padding: 0 32px;
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .sidebar-header .icon-gavel {
-            display: inline-block;
-            font-size: 20px;
-        }
-
-        .sidebar-header .sub {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 4px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .sidebar-nav {
-            padding: 12px 0;
-            flex: 1;
-        }
-
-        .sidebar-nav .section-title {
-            padding: 8px 20px 4px;
-            font-size: 10px;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .sidebar-nav a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 20px;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: all 0.15s;
-            border-left: 2px solid transparent;
-        }
-
-        .sidebar-nav a:hover {
-            background: var(--bg-hover);
-            color: var(--text-primary);
-        }
-
-        .sidebar-nav a.active {
-            color: var(--accent);
-            border-left-color: var(--accent);
-            background: var(--accent-glow);
-        }
-
-        .sidebar-nav .nav-icon {
-            width: 20px;
-            text-align: center;
-            font-size: 14px;
+            gap: 24px;
+            height: 56px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
             flex-shrink: 0;
         }
 
-        .sidebar-stats {
-            padding: 16px 20px;
-            border-top: 1px solid var(--border);
+        .top-nav-brand {
             display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            flex-shrink: 0;
         }
 
-        .sidebar-stats .stat-tag {
-            font-size: 11px;
-            padding: 3px 8px;
-            border-radius: 4px;
-            background: var(--bg-hover);
+        .top-nav-brand .brand-sub {
+            font-size: 10px;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: none;
+        }
+
+        .top-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+            overflow-x: auto;
+        }
+
+        .top-nav-links a {
             color: var(--text-secondary);
-            border: 1px solid var(--border);
+            text-decoration: none;
+            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.15s;
+            white-space: nowrap;
         }
 
-        .sidebar-stats .stat-tag b {
+        .top-nav-links a:hover {
+            background: var(--bg-hover);
             color: var(--text-primary);
         }
 
-        .main-content {
-            flex: 1;
-            margin-left: 260px;
-            padding: 0;
+        .top-nav-links a.active {
+            color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .top-nav-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .top-nav-stats {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--text-muted);
+            flex-shrink: 0;
+            padding: 4px 10px;
+            background: var(--bg-card);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .top-nav-stats b {
+            color: var(--text-primary);
+            font-weight: 600;
         }
 
         .topbar {
@@ -960,39 +934,27 @@
 </head>
 <body>
     <div class="app-layout">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h1>
-                    <span class="icon-gavel">&#9878;</span>
-                    Xây dựng
-                </h1>
-                <div class="sub">Văn bản pháp luật</div>
-            </div>
-            <nav class="sidebar-nav">
-                <div class="section-title">Danh mục</div>
-                <a href="/" class="active">
-                    <span class="nav-icon">&#127968;</span> Tất cả văn bản
-                </a>
+        <!-- Top Nav -->
+        <nav class="top-nav">
+            <a href="/" class="top-nav-brand">
+                <span>&#9878;</span> Xây dựng
+                <span class="brand-sub">Văn bản Pháp luật</span>
+            </a>
+            <div class="top-nav-links">
+                <a href="/" class="{% if not search and not loai_filter %}active{% endif %}">&#127968; Tất cả</a>
                 {% for l in loai_list %}
-                <a href="/?loai={{ l|urlencode }}" class="{% if loai_filter == l %}active{% endif %}">
-                    <span class="nav-icon">&#128196;</span> {{ l }}
-                </a>
+                <a href="/?loai={{ l|urlencode }}" class="{% if loai_filter == l %}active{% endif %}">&#128196; {{ l }}</a>
                 {% endfor %}
-                <div style="margin-top:16px;">
-                    <div class="section-title">Quản lý</div>
-                    <a href="/them">
-                        <span class="nav-icon">&#43;</span> Thêm văn bản
-                    </a>
-                </div>
-            </nav>
-            <div class="sidebar-stats">
-                {% for l, c in stats.items() %}
-                <span class="stat-tag">{{ l }} <b>{{ c }}</b></span>
-                {% endfor %}
-                <span class="stat-tag">Tổng <b>{{ total }}</b></span>
             </div>
-        </aside>
+            <div class="top-nav-stats">
+                Tổng <b>{{ total }}</b>
+            </div>
+            <div class="top-nav-actions">
+                <a href="/them" class="btn btn-primary">
+                    &#43; Thêm
+                </a>
+            </div>
+        </nav>
 
         <!-- Main -->
         <main class="main-content">
@@ -1046,13 +1008,6 @@
                 <div class="breadcrumb">
                     <span style="margin-right:6px;">&#128196;</span>
                     {% block breadcrumb %}Trang chủ{% endblock %}
-                </div>
-                <div class="topbar-actions">
-                    {% block top_actions %}
-                    <a href="/them" class="btn btn-primary">
-                        &#43; Thêm văn bản
-                    </a>
-                    {% endblock %}
                 </div>
             </div>
             <div class="content-area">

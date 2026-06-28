@@ -4,22 +4,23 @@
 <a href="/" style="color:var(--text-muted);text-decoration:none;">Văn bản</a> / <span>{{ vb.tieu_de|truncate(60) }}</span>
 {% endblock %}
 
-{% block top_actions %}
-<a href="/xuat-pdf/{{ vb.id }}" class="btn btn-outline">
-    &#128196; Xuất PDF
-</a>
-<a href="/sua/{{ vb.id }}" class="btn btn-outline">
-    &#9998; Sửa
-</a>
-<form method="POST" action="/xoa/{{ vb.id }}" style="display:inline;" onsubmit="return confirm('Xoá văn bản này?');">
-    <button type="submit" class="btn btn-danger">
-        &#128465; Xoá
-    </button>
-</form>
-{% endblock %}
-
 {% block content %}
 <div style="max-width:900px;">
+
+    <!-- Actions -->
+    <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <a href="/xuat-pdf/{{ vb.id }}" class="btn btn-outline">
+            &#128196; Xuất PDF
+        </a>
+        <a href="/sua/{{ vb.id }}" class="btn btn-outline">
+            &#9998; Sửa
+        </a>
+        <form method="POST" action="/xoa/{{ vb.id }}" style="display:inline;" onsubmit="return confirm('Xoá văn bản này?');">
+            <button type="submit" class="btn btn-danger">
+                &#128465; Xoá
+            </button>
+        </form>
+    </div>
 
     <!-- Header -->
     <div style="margin-bottom:24px;">

@@ -4,18 +4,6 @@
 <a href="/" style="color:var(--text-muted);text-decoration:none;">Văn bản</a> / <span>{% if vb %}Sửa{% else %}Thêm mới{% endif %}</span>
 {% endblock %}
 
-{% block top_actions %}
-{% if vb %}
-<a href="/vanban/{{ vb.id }}" class="btn btn-outline">
-    &#8592; Quay lại
-</a>
-{% else %}
-<a href="/" class="btn btn-outline">
-    &#8592; Quay lại
-</a>
-{% endif %}
-{% endblock %}
-
 {% block content %}
 <div style="max-width:800px;">
     <h1 style="font-size:22px;font-weight:700;margin-bottom:24px;">
